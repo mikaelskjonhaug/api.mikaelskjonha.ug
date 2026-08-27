@@ -1,0 +1,26 @@
+{
+  "name": "github_activity_monitor",
+  "version": "1.0.0",
+  "description": "API that returns the latest activity of a GitHub user. Used for [mikaelskjonha.ug](https://mikaelskjonha.ug).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikaelskjonhaug/github_activity_monitor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/mikaelskjonhaug/github_activity_monitor/issues"
+  },
+  "homepage": "https://github.com/mikaelskjonhaug/github_activity_monitor#readme",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "^7.0.2"
+  }
+}
