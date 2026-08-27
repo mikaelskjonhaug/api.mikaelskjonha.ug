@@ -5,7 +5,7 @@ import test from "node:test";
 
 import { handler } from "../src/server.ts";
 
-test("GET /health reports that the server is running", async () => {
+test("GET /hello reports that the server is running", async () => {
     const server = createServer(handler);
 
     server.listen(0, "127.0.0.1");
@@ -28,7 +28,7 @@ test("GET /health reports that the server is running", async () => {
     }
 });
 
-test("/GET on random endpoint returns 404", async () => {
+test("/GET unknown route returns 404", async () => {
     const server = createServer(handler);
 
     server.listen(0, "127.0.0.1");
