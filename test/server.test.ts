@@ -16,11 +16,34 @@ test("GET /health reports that the server is running", async () => {
         assert(address && typeof address !== "string");
 
         const response = await fetch(
-            `http://127.0.0.1:${address.port}/health`,
+            `http://127.0.0.1:${address.port}/hello`,
         );
 
         assert.equal(response.status, 200);
         assert.deepEqual(await response.json(), { status: "ok" });
+    } finally {
+        await new Promise<void>((resolve, reject) => {
+            server.close((error) => error ? reject(error) : resolve());
+        });
+    }
+});
+
+test("/GET on random endpoint returns 404", async () => {
+    const server = createServer(handler);
+
+    server.listen(0, "127.0.0.1");
+    await once(server, "listening");
+
+    try {
+        const address = server.address();
+        assert(address && typeof address !== "string");
+
+        const response = await fetch(
+            `http://127.0.0.1:${address.port}/missing`,
+        );
+
+        assert.equal(response.status, 404);
+        assert.deepEqual(await response.json(), { error: "Not found" });
     } finally {
         await new Promise<void>((resolve, reject) => {
             server.close((error) => error ? reject(error) : resolve());

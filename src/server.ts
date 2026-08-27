@@ -5,13 +5,22 @@ import {
 } from "node:http";
 
 export function handler(
-    _request: IncomingMessage,
+    request: IncomingMessage,
     response: ServerResponse,
 ): void {
-    response.writeHead(200, {
-        "content-type": "application/json; charset=utf-8",
-    });
-    response.end(JSON.stringify({ status: "ok" }));
+    response.setHeader(
+        "content-type",
+        "application/json; charset=utf-8",
+    );
+
+    if (request.url === "/hello") {
+        response.statusCode = 200;
+        response.end(JSON.stringify({ status: "ok" }));
+        return;
+    }
+
+    response.statusCode = 404;
+    response.end(JSON.stringify({ error: "Not found" }));
 }
 
 if (import.meta.main) {
