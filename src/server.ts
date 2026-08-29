@@ -4,6 +4,23 @@ import {
     type ServerResponse,
 } from "node:http";
 
+// Request body stream to JSON
+function dataStreamToJSON(request: IncomingMessage): Promise<string> {
+    return new Promise((resolve, reject) => {
+        let data = "";
+        request.on("data", (chunk) => {
+            data += chunk;
+        });
+        request.on("end", () => {
+            resolve(data);
+        });
+        request.on("error", (err) => {
+            reject(err);
+        });
+    });
+}
+
+// ROUTER
 export function handler(
     request: IncomingMessage,
     response: ServerResponse,
