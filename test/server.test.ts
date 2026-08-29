@@ -28,6 +28,32 @@ test("GET /hello reports that the server is running", async () => {
     }
 });
 
+test("API responses allow the website origin", async () => {
+    const server = createServer(handler);
+
+    server.listen(0, "127.0.0.1");
+    await once(server, "listening");
+
+    try {
+        const address = server.address();
+        assert(address && typeof address !== "string");
+
+        const response = await fetch(
+            `http://127.0.0.1:${address.port}/hello`,
+            { headers: { Origin: "https://mikaelskjonha.ug" } },
+        );
+
+        assert.equal(
+            response.headers.get("access-control-allow-origin"),
+            "https://mikaelskjonha.ug",
+        );
+    } finally {
+        await new Promise<void>((resolve, reject) => {
+            server.close((error) => error ? reject(error) : resolve());
+        });
+    }
+});
+
 test("/GET unknown route returns 404", async () => {
     const server = createServer(handler);
 

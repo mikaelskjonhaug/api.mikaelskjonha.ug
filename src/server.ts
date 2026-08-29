@@ -37,6 +37,26 @@ export async function handler(
         "content-type",
         "application/json; charset=utf-8",
     );
+
+    const allowedOrigins = new Set([
+        "https://mikaelskjonha.ug",
+        "http://localhost:5173",
+    ]);
+
+    const origin = request.headers.origin;
+    if (origin && allowedOrigins.has(origin)) {
+        response.setHeader("access-control-allow-origin", origin);
+        response.setHeader("vary", "Origin");
+    }
+
+    response.setHeader("access-control-allow-methods", "GET, POST, OPTIONS");
+    response.setHeader("access-control-allow-headers", "content-type");
+
+    if (request.method === "OPTIONS") {
+        response.statusCode = 204;
+        response.end();
+        return;
+    }
     // Sanity test 
     if (request.url === "/hello") {
         response.statusCode = 200;
@@ -115,8 +135,8 @@ export async function handler(
 if (import.meta.main) {
     if (process.env.DEBUG === "True") {
         createServer(handler).listen(3000, "127.0.0.1", () => {
-        console.log(`Listening on http://localhost:3000/`);
-    });
+            console.log(`Listening on http://localhost:3000/`);
+        });
     } else {
         const port = Number(process.env.PORT) || 3000;
         createServer(handler).listen(port, "0.0.0.0", () => {
