@@ -4,8 +4,8 @@
   "description": "API that returns the latest activity of a GitHub user. Used for [mikaelskjonha.ug](https://mikaelskjonha.ug).",
   "scripts": {
     "test": "node --test test/*.test.ts",
-    "start": "node src/server.ts",
-    "dev": "node --watch src/server.ts",
+    "start": "node --env-file=.env src/server.ts",
+    "dev": "node --watch --env-file=.env src/server.ts",
     "check": "tsc"
   },
   "repository": {

@@ -57,13 +57,8 @@ const ACTIVITY_QUERY = `
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 export async function fetchActivity(
-    token: string,
     now = new Date(),
 ): Promise<Activity> {
-    if (!token) {
-        throw new Error("GitHub token is required");
-    }
-
     const to = now.toISOString();
     const from = new Date(now.getTime() - SEVEN_DAYS_MS).toISOString();
 
@@ -71,7 +66,7 @@ export async function fetchActivity(
         method: "POST",
         headers: {
             accept: "application/vnd.github+json",
-            authorization: `Bearer ${token}`,
+            authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
             "content-type": "application/json",
             "user-agent": "github-activity-monitor",
         },
