@@ -113,8 +113,14 @@ export async function handler(
 }
 
 if (import.meta.main) {
-    const port = Number(process.env.PORT) || 3000;
-    createServer(handler).listen(port, "0.0.0.0", () => {
-        console.log(`Listening on http://0.0.0.0:${port}`);
+    if (process.env.DEBUG === "True") {
+        createServer(handler).listen(3000, "127.0.0.1", () => {
+        console.log(`Listening on http://localhost:3000/`);
     });
+    } else {
+        const port = Number(process.env.PORT) || 3000;
+        createServer(handler).listen(port, "0.0.0.0", () => {
+            console.log(`Listening on http://0.0.0.0:${port}/`);
+        });
+    }
 }
