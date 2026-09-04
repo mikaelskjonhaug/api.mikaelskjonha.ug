@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: github_activity
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: localpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
