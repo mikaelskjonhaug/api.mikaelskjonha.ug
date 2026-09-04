@@ -2,13 +2,13 @@ services:
   db:
     image: postgres:18
     environment:
-      POSTGRES_DB: github_activity
+      POSTGRES_DB: portfolio
       POSTGRES_USER: app
       POSTGRES_PASSWORD: localpassword
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
   api:
     build: .
