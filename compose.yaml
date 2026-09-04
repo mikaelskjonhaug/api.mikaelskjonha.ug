@@ -6,8 +6,6 @@ services:
       POSTGRES_DB: portfolio
       POSTGRES_USER: app
       POSTGRES_PASSWORD: localpassword
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
 
